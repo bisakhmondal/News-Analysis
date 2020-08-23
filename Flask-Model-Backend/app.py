@@ -14,6 +14,11 @@ if not os.path.exists('model_weights/model.h5'):
 model = Model()
 
 
+@app.route('/')
+def index():
+    return "Running"
+
+
 @app.route('/prediction', methods=['POST'])
 def Prediction():
     if request.get_json() is not None:
@@ -24,8 +29,6 @@ def Prediction():
     probability = model.predict(texts)
     for i in range(len(content)):
         content[i]['prob'] = str(probability[i][0])
-    import pprint
-    pprint.pprint(content, indent=4)
     response = app.response_class(
         response=json.dumps(content),
         status=200,
@@ -45,8 +48,6 @@ def Predict():
     probability = model.predict(text)
     print(probability)
     content['prob'] = str(probability[0][0])
-    import pprint
-    pprint.pprint(content, indent=4)
     response = app.response_class(
         response=json.dumps(content),
         status=200,
@@ -56,4 +57,4 @@ def Predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    app.run()

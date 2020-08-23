@@ -6,7 +6,7 @@ import json
 from functools import partial
 
 __all__ = ['Model']
-embedding_dim = 200
+embedding_dim = 100
 max_length = 60
 trunc_type = 'post'
 padding_type = 'post'
