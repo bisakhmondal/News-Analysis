@@ -4,7 +4,7 @@ import os
 import json
 import numpy
 import warnings
-
+import gc
 warnings.filterwarnings('ignore')
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ if not os.path.exists('model_weights/model.h5'):
     os.system('cd model_weights && cat x* > model.h5')
 
 
-
+gc.collect()
 @app.route('/')
 def index():
     return "Running"
@@ -28,6 +28,7 @@ def Prediction():
     texts = [x['title'] + ' ' + x['text'] for x in content]
     probability = model.predict(texts)
     del model
+    gc.collect()
     for i in range(len(content)):
         content[i]['prob'] = str(probability[i][0])
     print(content)
@@ -51,6 +52,7 @@ def Predict():
     probability = model.predict(text)
     print(probability)
     del model
+    gc.collect()
     content['prob'] = str(probability[0][0])
     response = app.response_class(
         response=json.dumps(content),

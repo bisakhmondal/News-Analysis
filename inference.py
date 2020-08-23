@@ -47,5 +47,11 @@ class Model:
         probs = self.model.predict(pads)
 
         return probs
+        
+    def __del__(self):
+    	del self.tokenizer
+    	del self.filter
+    	del self.model
+    	del self.padder
 
 
